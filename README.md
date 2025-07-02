@@ -1,4 +1,4 @@
-<div align="center">
+from celeste_embeddings.core.enums import GoogleEmbedding<div align="center">
 
 # 🌟 Celeste Embeddings
 
@@ -33,25 +33,17 @@
 
 ```python
 # Install
-pip install celeste-embeddings  # Coming soon to PyPI
+!uv add celeste-embeddings  # Coming soon to PyPI
 
 # Use any embedding provider with the same interface
 from celeste_embeddings import create_embedder
+from celeste_embeddings.core.enums import GoogleEmbedding
 
 # Create an embedder (currently Google is implemented)
-embedder = create_embedder("google", model="text-embedding-004")
-
+embedder = create_embedder("google", model=GoogleEmbedding.GEMINIEMBEDDING)
 # Generate embeddings for a single text
 text = "The quick brown fox jumps over the lazy dog"
 embedding = await embedder.embed(text)
-print(f"Embedding dimension: {len(embedding.values)}")
-print(f"First 5 values: {embedding.values[:5]}")
-
-# Generate embeddings for multiple texts (batch processing)
-texts = ["Hello world", "Python is awesome", "AI embeddings"]
-embeddings = await embedder.embed_batch(texts)
-for i, emb in enumerate(embeddings):
-    print(f"Text {i}: dimension={len(emb.values)}, usage={emb.usage}")
 ```
 
 ## 📦 Installation
@@ -148,79 +140,9 @@ cp .env.example .env
 
 </details>
 
-## 💻 Usage Examples
-
-### 📊 Single Text Embedding
-```python
-from celeste_embeddings import create_embedder
-
-# Create embedder
-embedder = create_embedder("google", model="text-embedding-004")
-
-# Embed a single text
-text = "Machine learning is transforming the world"
-embedding = await embedder.embed(text)
-
-print(f"Embedding shape: {len(embedding.values)} dimensions")
-print(f"Model: {embedding.model}")
-print(f"Tokens used: {embedding.usage.total_tokens}")
-```
-
-### 📦 Batch Embeddings
-```python
-# Embed multiple texts efficiently
-texts = [
-    "Natural language processing",
-    "Computer vision applications",
-    "Reinforcement learning algorithms"
-]
-
-embeddings = await embedder.embed_batch(texts)
-
-for i, embedding in enumerate(embeddings):
-    print(f"Text {i}: {len(embedding.values)} dimensions")
-```
-
-### 🎯 Similarity Search Example
-```python
-import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
-
-# Create embeddings for documents
-documents = [
-    "Python is a versatile programming language",
-    "Machine learning requires good data",
-    "Coffee is the best morning drink"
-]
-
-doc_embeddings = await embedder.embed_batch(documents)
-doc_vectors = np.array([e.values for e in doc_embeddings])
-
-# Query embedding
-query = "What programming language should I learn?"
-query_embedding = await embedder.embed(query)
-query_vector = np.array(query_embedding.values).reshape(1, -1)
-
-# Find most similar document
-similarities = cosine_similarity(query_vector, doc_vectors)[0]
-most_similar_idx = np.argmax(similarities)
-
-print(f"Most similar document: {documents[most_similar_idx]}")
-print(f"Similarity score: {similarities[most_similar_idx]:.3f}")
-```
-
 ## 🎮 Interactive Demo
 
 Try our Jupyter notebook example:
-
-```bash
-jupyter notebook Notebooks/hello_world.ipynb
-```
-
-Or run it directly:
-```bash
-uv run python -m notebook Notebooks/hello_world.ipynb
-```
 
 ## 🗺️ Roadmap
 
