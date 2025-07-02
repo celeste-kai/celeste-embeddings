@@ -5,7 +5,7 @@ Celeste Embedding Client - Multi-provider embedding client for Python.
 from typing import Any
 
 from .base import BaseEmbedder
-from .core import Embedding, Provider
+from .core import Embedding, EmbeddingsProvider
 
 __version__ = "0.1.0"
 
@@ -34,6 +34,6 @@ def create_embedder(provider: str, **kwargs: Any) -> BaseEmbedder:
 __all__ = [
     "create_embedder",
     "BaseEmbedder",
-    "Provider",
+    "EmbeddingsProvider",
     "Embedding",
 ]

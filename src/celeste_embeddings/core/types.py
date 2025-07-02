@@ -6,7 +6,7 @@ from typing import Any, Dict, Optional
 
 from pydantic import BaseModel, ConfigDict
 
-from .enums import Provider
+from .enums import EmbeddingsProvider
 
 
 class AIUsage(BaseModel):
@@ -24,5 +24,5 @@ class Embedding(BaseModel):
 
     values: list[float]
     usage: Optional[AIUsage] = None
-    provider: Optional[Provider] = None
+    provider: Optional[EmbeddingsProvider] = None
     metadata: Dict[str, Any] = {}
