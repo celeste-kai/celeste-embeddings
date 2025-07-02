@@ -31,7 +31,3 @@ class GoogleEmbedding(Enum):
     GEMINIEMBEDDING = "gemini-embedding-exp-03-07"
     TEXTEMBEDDING004 = "text-embedding-004"
     EMBEDDING001 = "embedding-001"
-
-
-
-

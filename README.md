@@ -1,15 +1,15 @@
 <div align="center">
 
-# 🌟 Celeste AI Client
+# 🌟 Celeste Embeddings
 
-### One Interface, All AI Providers - Unified API for Seamless AI Integration
+### One Interface, All Embedding Providers - Unified API for Text Embeddings
 
 [![Python](https://img.shields.io/badge/Python-3.13+-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
-[![Providers](https://img.shields.io/badge/Providers-6+-orange?style=for-the-badge&logo=openai&logoColor=white)](#-supported-providers)
-[![Models](https://img.shields.io/badge/Models-40+-purple?style=for-the-badge&logo=huggingface&logoColor=white)](#-supported-models)
+[![Providers](https://img.shields.io/badge/Providers-1_Implemented-orange?style=for-the-badge&logo=google&logoColor=white)](#-supported-providers)
+[![Models](https://img.shields.io/badge/Embedding_Models-3+-purple?style=for-the-badge&logo=tensorflow&logoColor=white)](#-supported-models)
 
-[![Demo](https://img.shields.io/badge/🚀_Try_Demo-Streamlit-FF4B4B?style=for-the-badge)](example.py)
+[![Demo](https://img.shields.io/badge/🚀_Try_Demo-Jupyter-F37626?style=for-the-badge)](Notebooks/hello_world.ipynb)
 [![Documentation](https://img.shields.io/badge/📚_Docs-Coming_Soon-blue?style=for-the-badge)](#)
 
 </div>
@@ -21,10 +21,10 @@
 <div align="center">
   <table>
     <tr>
-      <td align="center">🔌<br><b>Unified API</b><br>One interface for all providers</td>
-      <td align="center">🏠<br><b>Local & Cloud</b><br>Run locally or in the cloud</td>
+      <td align="center">🔌<br><b>Unified API</b><br>One interface for all embedding providers</td>
+      <td align="center">📊<br><b>Vector Output</b><br>Dense embeddings for your AI apps</td>
       <td align="center">⚡<br><b>Async First</b><br>Built for performance</td>
-      <td align="center">🔄<br><b>Streaming</b><br>Real-time responses</td>
+      <td align="center">📦<br><b>Batch Processing</b><br>Efficient bulk embeddings</td>
     </tr>
   </table>
 </div>
@@ -33,27 +33,25 @@
 
 ```python
 # Install
-pip install celeste-client  # Coming soon to PyPI
+pip install celeste-embeddings  # Coming soon to PyPI
 
-# Use any AI provider with the same interface
-from celeste_client import create_client
-from celeste_client.core.types import AIPrompt, MessageRole
+# Use any embedding provider with the same interface
+from celeste_embeddings import create_embedder
 
-# Create a prompt
-prompt = AIPrompt(role=MessageRole.USER, content="Explain quantum computing")
+# Create an embedder (currently Google is implemented)
+embedder = create_embedder("google", model="text-embedding-004")
 
-# Cloud providers
-client = create_client("openai", model="gpt-4o-mini")
-client = create_client("anthropic", model="claude-3-7-sonnet")
+# Generate embeddings for a single text
+text = "The quick brown fox jumps over the lazy dog"
+embedding = await embedder.embed(text)
+print(f"Embedding dimension: {len(embedding.values)}")
+print(f"First 5 values: {embedding.values[:5]}")
 
-# Local models (no API key needed!)
-client = create_client("ollama", model="llama3.2")
-
-# Generate content
-response = await client.generate_content(prompt)
-print(response.content)
-# Get usage details
-print(response.usage)
+# Generate embeddings for multiple texts (batch processing)
+texts = ["Hello world", "Python is awesome", "AI embeddings"]
+embeddings = await embedder.embed_batch(texts)
+for i, emb in enumerate(embeddings):
+    print(f"Text {i}: dimension={len(emb.values)}, usage={emb.usage}")
 ```
 
 ## 📦 Installation
@@ -62,8 +60,8 @@ print(response.usage)
 <summary><b>Using UV (Recommended)</b></summary>
 
 ```bash
-git clone https://github.com/yourusername/celeste-client
-cd celeste-client
+git clone https://github.com/yourusername/celeste-embeddings
+cd celeste-embeddings
 uv sync
 ```
 </details>
@@ -72,8 +70,8 @@ uv sync
 <summary><b>Using pip</b></summary>
 
 ```bash
-git clone https://github.com/yourusername/celeste-client
-cd celeste-client
+git clone https://github.com/yourusername/celeste-embeddings
+cd celeste-embeddings
 pip install -e .
 ```
 </details>
@@ -105,133 +103,152 @@ cp .env.example .env
 
 <div align="center">
 
-| Provider | Models | Streaming | Local | Free Tier |
-|----------|--------|-----------|--------|-----------|
-| 🌈 **Google Gemini** | 3 | ✅ | ❌ | ✅ |
-| 🤖 **OpenAI** | 3 | ✅ | ❌ | ❌ |
-| 🌊 **Mistral AI** | 4 | ✅ | ❌ | ✅ |
-| 🎭 **Anthropic** | 3 | ✅ | ❌ | ❌ |
-| 🤗 **Hugging Face** | 7 | ✅ | ❌ | ✅ |
-| 🦙 **Ollama** | 20+ | ✅ | ✅ | ✅ |
+| Provider | Status | Models | Batch Processing | Free Tier |
+|----------|--------|--------|-----------------|------------|
+| 🌈 **Google** | ✅ Implemented | 3 | ✅ | ✅ |
+| 🤖 **OpenAI** | 🛠️ Planned | - | - | ❌ |
+| 🌊 **Mistral AI** | 🛠️ Planned | - | - | ✅ |
+| 🎭 **Anthropic** | 🛠️ Planned | - | - | ❌ |
+| 🤗 **Hugging Face** | 🛠️ Planned | - | - | ✅ |
+| 🦙 **Ollama** | 🛠️ Planned | - | - | ✅ |
 
 </div>
 
-## 📊 Supported Models
+## 📊 Supported Embedding Models
 
 <details>
 <summary><b>View All Models</b></summary>
 
-### 🌈 Google Gemini
-- `gemini-2.5-flash-lite-preview-06-17` - Ultra-fast responses
-- `gemini-2.5-flash` - Balanced performance
-- `gemini-2.5-pro` - Maximum capability
+### 🌈 Google (Implemented)
+- `text-embedding-004` - Latest Google embedding model (768 dimensions)
+- `gemini-embedding-exp-03-07` - Experimental Gemini embeddings
+- `embedding-001` - Legacy embedding model
 
-### 🤖 OpenAI
-- `o3-2025-04-16` - Latest O3 model
-- `o4-mini-2025-04-16` - Cost-effective
-- `gpt-4.1-2025-04-14` - Advanced reasoning
+### 🤖 OpenAI (Planned)
+- `text-embedding-3-small` - Cost-effective embeddings
+- `text-embedding-3-large` - High-quality embeddings
+- `text-embedding-ada-002` - Legacy model
 
-### 🌊 Mistral AI
-- `mistral-small-latest` - Fast & efficient
-- `mistral-medium-latest` - Balanced
-- `mistral-large-latest` - High performance
-- `codestral-latest` - Code specialist
+### 🌊 Mistral AI (Planned)
+- `mistral-embed` - Mistral's embedding model
 
-### 🎭 Anthropic Claude
-- `claude-3-7-sonnet-20250219` - Claude 3.7
-- `claude-sonnet-4-20250514` - Claude 4 Sonnet
-- `claude-opus-4-20250514` - Claude 4 Opus
+### 🎭 Anthropic (Planned)
+- Anthropic embedding models (when available)
 
-### 🤗 Hugging Face
-- `google/gemma-2-2b-it` - Lightweight
-- `meta-llama/Meta-Llama-3.1-8B-Instruct` - Llama 3.1
-- `microsoft/phi-4` - Microsoft Phi-4
-- `Qwen/Qwen2.5-7B-Instruct-1M` - 1M context window
-- `deepseek-ai/DeepSeek-R1` - DeepSeek reasoning
-- [View more...](#)
+### 🤗 Hugging Face (Planned)
+- `sentence-transformers/all-MiniLM-L6-v2` - Lightweight
+- `sentence-transformers/all-mpnet-base-v2` - High quality
+- `BAAI/bge-large-en-v1.5` - State-of-the-art
+- [View more on HuggingFace](https://huggingface.co/models?pipeline_tag=sentence-similarity)
 
-### 🦙 Ollama (Local)
-Popular models (pull with `ollama pull <model>`):
-- `llama3.2` - Latest Llama
-- `mistral` - Mistral 7B
-- `mixtral:8x7b` - MoE model
-- `phi3` - Microsoft Phi-3
-- `deepseek-r1` - DeepSeek reasoning
-- `codellama` - Code generation
-- [View all models](https://ollama.com/library)
+### 🦙 Ollama (Planned)
+- `nomic-embed-text` - Nomic's embedding model
+- `mxbai-embed-large` - High-performance embeddings
+- [View all models](https://ollama.com/library?q=embed)
 
 </details>
 
 ## 💻 Usage Examples
 
-### 🔥 Streaming Responses
+### 📊 Single Text Embedding
 ```python
-prompt = AIPrompt(role=MessageRole.USER, content="Write a haiku about programming")
-async for chunk in client.stream_generate_content(prompt):
-    if chunk.content:
-        print(chunk.content, end="", flush=True)
+from celeste_embeddings import create_embedder
+
+# Create embedder
+embedder = create_embedder("google", model="text-embedding-004")
+
+# Embed a single text
+text = "Machine learning is transforming the world"
+embedding = await embedder.embed(text)
+
+print(f"Embedding shape: {len(embedding.values)} dimensions")
+print(f"Model: {embedding.model}")
+print(f"Tokens used: {embedding.usage.total_tokens}")
 ```
 
-### 🏠 Local Models with Ollama
+### 📦 Batch Embeddings
 ```python
-# No API key needed!
-client = create_client("ollama", model="llama3.2")
+# Embed multiple texts efficiently
+texts = [
+    "Natural language processing",
+    "Computer vision applications",
+    "Reinforcement learning algorithms"
+]
 
-# Custom host
-client = create_client("ollama", model="llama3.2", 
-                      host="http://192.168.1.100:11434")
+embeddings = await embedder.embed_batch(texts)
+
+for i, embedding in enumerate(embeddings):
+    print(f"Text {i}: {len(embedding.values)} dimensions")
 ```
 
-### 🎯 Provider Comparison
+### 🎯 Similarity Search Example
 ```python
-from celeste_client import create_client
-from celeste_client.core.types import AIPrompt, MessageRole
+import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
 
-providers = ["openai", "anthropic", "mistral"]
-prompt = AIPrompt(role=MessageRole.USER, content="Explain quantum entanglement in one sentence")
+# Create embeddings for documents
+documents = [
+    "Python is a versatile programming language",
+    "Machine learning requires good data",
+    "Coffee is the best morning drink"
+]
 
-for provider in providers:
-    client = create_client(provider)
-    response = await client.generate_content(prompt)
-    print(f"{provider}: {response.content}")
-    print(f"Usage: {response.usage}")
+doc_embeddings = await embedder.embed_batch(documents)
+doc_vectors = np.array([e.values for e in doc_embeddings])
+
+# Query embedding
+query = "What programming language should I learn?"
+query_embedding = await embedder.embed(query)
+query_vector = np.array(query_embedding.values).reshape(1, -1)
+
+# Find most similar document
+similarities = cosine_similarity(query_vector, doc_vectors)[0]
+most_similar_idx = np.argmax(similarities)
+
+print(f"Most similar document: {documents[most_similar_idx]}")
+print(f"Similarity score: {similarities[most_similar_idx]:.3f}")
 ```
 
 ## 🎮 Interactive Demo
 
-Try our Streamlit demo with all providers:
+Try our Jupyter notebook example:
 
 ```bash
-uv run streamlit run example.py
+jupyter notebook Notebooks/hello_world.ipynb
 ```
 
-<div align="center">
-  <img src="assets/demo-screenshot.png" width="600" alt="Celeste Demo">
-</div>
+Or run it directly:
+```bash
+uv run python -m notebook Notebooks/hello_world.ipynb
+```
 
 ## 🗺️ Roadmap
 
-### Celeste-Client Next Steps
-- [x] 📝 **Use Types** - Implement AIPrompt and AIResponse types
-- [x] 📊 **Add Metadata** - Generation time and token usage tracking
-- [ ] 📚 **Sphinx Documentation** - Comprehensive API documentation
-- [ ] 🧪 **Unit Tests** - Achieve 80% test coverage
-- [ ] 🛡️ **Error Handling** - Robust error handling and retry logic
-- [ ] 📦 **PyPI Package** - Easy installation
+### Celeste-Embeddings Next Steps
+- [x] 📝 **Core Types** - Implement Embedding and AIUsage types
+- [x] 🌈 **Google Provider** - Complete implementation with 3 models
+- [ ] 🤖 **OpenAI Provider** - Add support for text-embedding-3 models
+- [ ] 🌊 **Mistral Provider** - Add support for mistral-embed
+- [ ] 🎭 **Anthropic Provider** - Add support when embeddings are available
+- [ ] 🤗 **HuggingFace Provider** - Support for sentence-transformers
+- [ ] 🦙 **Ollama Provider** - Local embedding models support
+- [ ] 🧪 **Unit Tests** - Comprehensive test coverage
+- [ ] 📚 **Documentation** - API documentation with examples
+- [ ] 📦 **PyPI Package** - Publish to PyPI as `celeste-embeddings`
 
 ### Celeste Ecosystem
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| 💬 **celeste-conversations** | Multi-turn conversations with memory management | 🔄 In Progress |
-| 🌐 **celeste-web-agent** | Web browsing and automation capabilities | 📋 Backlog |
-| 🎨 **celeste-image-generation** | Image generation across providers | 📋 Backlog |
-| 🎬 **celeste-video-generation** | Video generation and editing | 📋 Backlog |
-| 📊 **celeste-presentation-intelligence** | PowerPoint and presentation analysis | 📋 Backlog |
-| 📄 **celeste-document-intelligence** | PDF and document processing | 📋 Backlog |
-| 📈 **celeste-table-intelligence** | Excel, CSV, and Parquet analysis | 📋 Backlog |
-| 🖼️ **celeste-image-intelligence** | Image analysis and understanding | 📋 Backlog |
-| 🎥 **celeste-video-intelligence** | Video analysis and understanding | 📋 Backlog |
+| 🌟 **celeste-embeddings** | Text embeddings across providers | 🔄 This Package |
+| 💬 **celeste-client** | Text generation and chat | ✅ Available |
+| 💬 **celeste-conversations** | Multi-turn conversations with memory | 🔄 In Progress |
+| 🌐 **celeste-web-agent** | Web browsing and automation | 📋 Planned |
+| 🎨 **celeste-image-generation** | Image generation across providers | 📋 Planned |
+| 🖼️ **celeste-image-intelligence** | Image analysis and understanding | 📋 Planned |
+| 📄 **celeste-document-intelligence** | PDF and document processing | 📋 Planned |
+| 📈 **celeste-table-intelligence** | Excel, CSV, and Parquet analysis | 📋 Planned |
+| 🎥 **celeste-video-intelligence** | Video analysis and understanding | 📋 Planned |
 | 🚀 **And many more...** | Expanding ecosystem of AI tools | 🔮 Future |
 
 ## 🤝 Contributing
@@ -247,5 +264,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <div align="center">
   Made with ❤️ by the Celeste Team
   
-  <a href="#-celeste-ai-client">⬆ Back to Top</a>
+  <a href="#-celeste-embeddings">⬆ Back to Top</a>
 </div>

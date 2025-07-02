@@ -27,7 +27,7 @@ def create_embedder(provider: str, **kwargs: Any) -> BaseEmbedder:
 
         return GoogleEmbedder(**kwargs)
     # Other providers to be implemented
-    
+
     raise ValueError(f"Provider {provider} not implemented")
 
 
