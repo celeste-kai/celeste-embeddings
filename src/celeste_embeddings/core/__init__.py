@@ -2,7 +2,7 @@
 Core data definitions for Celeste Embedding Client.
 """
 
-from .enums import LogLevel, EmbeddingsProvider
+from .enums import EmbeddingsProvider, LogLevel
 from .types import Embedding
 
 __all__ = [
