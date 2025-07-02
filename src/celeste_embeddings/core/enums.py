@@ -31,3 +31,10 @@ class GoogleEmbedding(Enum):
     GEMINIEMBEDDING = "gemini-embedding-exp-03-07"
     TEXTEMBEDDING004 = "text-embedding-004"
     EMBEDDING001 = "embedding-001"
+
+
+class MistralEmbedding(Enum):
+    """Mistral AI model enumeration for provider-specific model selection."""
+
+    MISTRAL_EMBED = "mistral-embed"
+    CODESTRAL_EMBED = "codestral-embed"
