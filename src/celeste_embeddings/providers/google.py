@@ -4,7 +4,7 @@ from google import genai
 
 from ..base import BaseEmbedder
 from ..core.config import GOOGLE_API_KEY
-from ..core.enums import GoogleEmbedding, Provider
+from ..core.enums import GoogleEmbedding, EmbeddingsProvider
 from ..core.types import Embedding
 
 
@@ -30,7 +30,7 @@ class GoogleEmbedder(BaseEmbedder):
             Embedding(
                 values=embedding.values,
                 usage=None,
-                provider=Provider.GOOGLE,
+                provider=EmbeddingsProvider.GOOGLE,
                 metadata={"model": self.embedding_model},
             )
             for embedding in response.embeddings
