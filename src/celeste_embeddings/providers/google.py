@@ -4,7 +4,7 @@ from google import genai
 
 from ..base import BaseEmbedder
 from ..core.config import GOOGLE_API_KEY
-from ..core.enums import GoogleEmbedding, EmbeddingsProvider
+from ..core.enums import EmbeddingsProvider, GoogleEmbedding
 from ..core.types import Embedding
 
 

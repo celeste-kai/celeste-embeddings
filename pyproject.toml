@@ -8,6 +8,7 @@ dependencies = [
     "python-dotenv>=1.1.1",
     "pydantic>=2.8.2",
     "notebook>=7.4.4",
+    "mistralai>=1.9.1",
 ]
 
 [dependency-groups]

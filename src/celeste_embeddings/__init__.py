@@ -26,6 +26,10 @@ def create_embedder(provider: str, **kwargs: Any) -> BaseEmbedder:
         from .providers.google import GoogleEmbedder
 
         return GoogleEmbedder(**kwargs)
+    elif provider == "mistral":
+        from .providers.mistral import MistralEmbedder
+
+        return MistralEmbedder(**kwargs)
     # Other providers to be implemented
 
     raise ValueError(f"Provider {provider} not implemented")
