@@ -1,4 +1,4 @@
-from celeste_embeddings.core.enums import GoogleEmbedding<div align="center">
+<div align="center">
 
 # 🌟 Celeste Embeddings
 
