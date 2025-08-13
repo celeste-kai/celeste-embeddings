@@ -1,24 +1,25 @@
 from typing import Any, List, Union
 
+from celeste_core import AIResponse, Provider
+from celeste_core.base.embedder import BaseEmbedder
+from celeste_core.config.settings import settings
 from google import genai
-
-from ..base import BaseEmbedder
-from ..core.config import GOOGLE_API_KEY
-from ..core.enums import EmbeddingsProvider, GoogleEmbedding
-from ..core.types import Embedding
 
 
 class GoogleEmbedder(BaseEmbedder):
     def __init__(
-        self, model: str = GoogleEmbedding.GEMINIEMBEDDING.value, **kwargs: Any
+        self, model: str = "gemini-embedding-exp-03-07", **kwargs: Any
     ) -> None:
-        self.client = genai.Client(api_key=GOOGLE_API_KEY)
+        self.client = genai.Client(api_key=settings.google.api_key)
         self.embedding_model = model
 
     async def generate_embeddings(
         self, texts: Union[str, List[str]], **kwargs: Any
-    ) -> List[Embedding]:
-        """Generate embeddings for the given text(s)."""
+    ) -> AIResponse:
+        """Generate embeddings for the given text(s).
+
+        Returns AIResponse[List[List[float]]].
+        """
         if isinstance(texts, str):
             texts = [texts]
 
@@ -26,12 +27,12 @@ class GoogleEmbedder(BaseEmbedder):
             model=self.embedding_model, contents=texts
         )
 
-        return [
-            Embedding(
-                values=embedding.values,
-                usage=None,
-                provider=EmbeddingsProvider.GOOGLE,
-                metadata={"model": self.embedding_model},
-            )
-            for embedding in response.embeddings
+        vectors: List[List[float]] = [
+            embedding.values for embedding in response.embeddings
         ]
+
+        return AIResponse(
+            content=vectors,
+            provider=Provider.GOOGLE,
+            metadata={"model": self.embedding_model},
+        )
