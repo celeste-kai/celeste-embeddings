@@ -1,24 +1,23 @@
 from typing import Any, List, Union
 
+from celeste_core import AIResponse, Provider
+from celeste_core.base.embedder import BaseEmbedder
+from celeste_core.config.settings import settings
 from mistralai import Mistral
-
-from ..base import BaseEmbedder
-from ..core.config import MISTRAL_API_KEY
-from ..core.enums import EmbeddingsProvider, MistralEmbedding
-from ..core.types import Embedding
 
 
 class MistralEmbedder(BaseEmbedder):
-    def __init__(
-        self, model: str = MistralEmbedding.MISTRAL_EMBED.value, **kwargs: Any
-    ) -> None:
-        self.client = Mistral(api_key=MISTRAL_API_KEY)
+    def __init__(self, model: str = "mistral-embed", **kwargs: Any) -> None:
+        self.client = Mistral(api_key=settings.mistral.api_key)
         self.model = model
 
     async def generate_embeddings(
         self, texts: Union[str, List[str]], **kwargs: Any
-    ) -> List[Embedding]:
-        """Generate embeddings for the given text(s)."""
+    ) -> AIResponse:
+        """Generate embeddings for the given text(s).
+
+        Returns AIResponse[List[List[float]]].
+        """
         if isinstance(texts, str):
             texts = [texts]
 
@@ -26,12 +25,10 @@ class MistralEmbedder(BaseEmbedder):
             model=self.model, inputs=texts
         )
 
-        return [
-            Embedding(
-                values=data.embedding,
-                usage=None,
-                provider=EmbeddingsProvider.MISTRAL,
-                metadata={"model": self.model},
-            )
-            for data in response.data
-        ]
+        vectors: List[List[float]] = [data.embedding for data in response.data]
+
+        return AIResponse(
+            content=vectors,
+            provider=Provider.MISTRAL,
+            metadata={"model": self.model},
+        )

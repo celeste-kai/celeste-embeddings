@@ -147,7 +147,7 @@ Try our Jupyter notebook example:
 ## 🗺️ Roadmap
 
 ### Celeste-Embeddings Next Steps
-- [x] 📝 **Core Types** - Implement Embedding and AIUsage types
+- [x] 📝 **Core Types** - Implement Embedding types
 - [x] 🌈 **Google Provider** - Complete implementation with 3 models
 - [ ] 🤖 **OpenAI Provider** - Add support for text-embedding-3 models
 - [ ] 🌊 **Mistral Provider** - Add support for mistral-embed
@@ -156,6 +156,7 @@ Try our Jupyter notebook example:
 - [ ] 🦙 **Ollama Provider** - Local embedding models support
 - [ ] 🧪 **Unit Tests** - Comprehensive test coverage
 - [ ] 📚 **Documentation** - API documentation with examples
+- [ ] 📊 **Usage Accounting** - Deferred; will be reintroduced later across modalities
 - [ ] 📦 **PyPI Package** - Publish to PyPI as `celeste-embeddings`
 
 ### Celeste Ecosystem
