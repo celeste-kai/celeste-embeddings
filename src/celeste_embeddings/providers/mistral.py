@@ -8,8 +8,8 @@ from mistralai import Mistral
 
 class MistralEmbedder(BaseEmbedder):
     def __init__(self, model: str = "mistral-embed", **kwargs: Any) -> None:
+        super().__init__(model=model, provider=Provider.MISTRAL, **kwargs)
         self.client = Mistral(api_key=settings.mistral.api_key)
-        self.model = model
 
     async def generate_embeddings(
         self, texts: Union[str, List[str]], **kwargs: Any

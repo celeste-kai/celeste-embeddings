@@ -10,8 +10,8 @@ class GoogleEmbedder(BaseEmbedder):
     def __init__(
         self, model: str = "gemini-embedding-exp-03-07", **kwargs: Any
     ) -> None:
+        super().__init__(model=model, provider=Provider.GOOGLE, **kwargs)
         self.client = genai.Client(api_key=settings.google.api_key)
-        self.embedding_model = model
 
     async def generate_embeddings(
         self, texts: Union[str, List[str]], **kwargs: Any
@@ -24,7 +24,7 @@ class GoogleEmbedder(BaseEmbedder):
             texts = [texts]
 
         response = await self.client.aio.models.embed_content(
-            model=self.embedding_model, contents=texts
+            model=self.model, contents=texts
         )
 
         vectors: List[List[float]] = [
@@ -34,5 +34,5 @@ class GoogleEmbedder(BaseEmbedder):
         return AIResponse(
             content=vectors,
             provider=Provider.GOOGLE,
-            metadata={"model": self.embedding_model},
+            metadata={"model": self.model},
         )
