@@ -18,9 +18,7 @@ __version__ = "0.1.0"
 def create_embedder(provider: str | Provider, **kwargs: Any) -> BaseEmbedder:
     provider_enum = Provider(provider) if isinstance(provider, str) else provider
     if provider_enum not in PROVIDER_MAPPING:
-        raise ValueError(
-            f"Provider '{provider_enum.value}' is not wired for embeddings."
-        )
+        raise ValueError(f"Provider '{provider_enum.value}' is not wired for embeddings.")
     settings.validate_for_provider(provider_enum.value)
     module_path, class_name = PROVIDER_MAPPING[provider_enum]
     module = import_module(f"celeste_embeddings{module_path}")

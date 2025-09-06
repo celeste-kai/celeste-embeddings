@@ -1,4 +1,4 @@
-from typing import Any, List, Union
+from typing import Any
 
 from celeste_core import AIResponse, Provider
 from celeste_core.base.embedder import BaseEmbedder
@@ -11,9 +11,7 @@ class MistralEmbedder(BaseEmbedder):
         super().__init__(model=model, provider=Provider.MISTRAL, **kwargs)
         self.client = Mistral(api_key=settings.mistral.api_key)
 
-    async def generate_embeddings(
-        self, texts: Union[str, List[str]], **kwargs: Any
-    ) -> AIResponse:
+    async def generate_embeddings(self, texts: str | list[str], **kwargs: Any) -> AIResponse:  # noqa: ARG002
         """Generate embeddings for the given text(s).
 
         Returns AIResponse[List[List[float]]].
@@ -21,11 +19,9 @@ class MistralEmbedder(BaseEmbedder):
         if isinstance(texts, str):
             texts = [texts]
 
-        response = await self.client.embeddings.create_async(
-            model=self.model, inputs=texts
-        )
+        response = await self.client.embeddings.create_async(model=self.model, inputs=texts)
 
-        vectors: List[List[float]] = [data.embedding for data in response.data]
+        vectors: list[list[float]] = [data.embedding for data in response.data]
 
         return AIResponse(
             content=vectors,
