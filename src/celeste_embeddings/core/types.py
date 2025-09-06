@@ -2,7 +2,7 @@
 Core data types for agent communication.
 """
 
-from typing import Any, Dict, Optional
+from typing import Any
 
 from celeste_core import Provider
 from pydantic import BaseModel, Field
@@ -13,5 +13,5 @@ class Embedding(BaseModel):
 
     values: list[float]
 
-    provider: Optional[Provider] = None
-    metadata: Dict[str, Any] = Field(default_factory=dict)
+    provider: Provider | None = None
+    metadata: dict[str, Any] = Field(default_factory=dict)
